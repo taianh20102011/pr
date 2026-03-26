@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch - Portal</title>
+    <meta name="description" content="Lịch dương và âm - Xem lịch chi tiết, thêm ghi chú cá nhân">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                        accent: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                        </svg>
+                        <span class="text-xl font-bold text-gray-800 dark:text-white">Portal</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Trang chủ</a>
+                    <a href="calendar.html" class="nav-link active text-primary font-medium">Lịch</a>
+                    <a href="weather.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Thời tiết</a>
+                    <a href="news.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Thời sự</a>
+                    <a href="contact.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Liên hệ</a>
+                    <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+            <div class="px-4 py-2 space-y-2">
+                <a href="index.html" class="block py-2 text-gray-600 dark:text-gray-300">Trang chủ</a>
+                <a href="calendar.html" class="block py-2 text-primary font-medium">Lịch</a>
+                <a href="weather.html" class="block py-2 text-gray-600 dark:text-gray-300">Thời tiết</a>
+                <a href="news.html" class="block py-2 text-gray-600 dark:text-gray-300">Thời sự</a>
+                <a href="contact.html" class="block py-2 text-gray-600 dark:text-gray-300">Liên hệ</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Calendar Header -->
+        <div class="flex flex-col md:flex-row items-center justify-between mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4 md:mb-0">Lịch</h1>
+            <div class="flex items-center space-x-4">
+                <button id="prevMonth" class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <div class="text-xl font-semibold text-gray-800 dark:text-white" id="currentMonthYear">Tháng 1, 2024</div>
+                <button id="nextMonth" class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+                <button id="todayBtn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    Hôm nay
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Calendar Grid -->
+            <div class="lg:col-span-2">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                    <!-- Weekday Headers -->
+                    <div class="grid grid-cols-7 bg-gray-100 dark:bg-gray-700">
+                        <div class="py-3 text-center text-sm font-semibold text-red-500">CN</div>
+                        <div class="py-3 text-center text-sm font-semibold text-gray-600 dark:text-gray-300">T2</div>
+                        <div class="py-3 text-center text-sm font-semibold text-gray-600 dark:text-gray-300">T3</div>
+                        <div class="py-3 text-center text-sm font-semibold text-gray-600 dark:text-gray-300">T4</div>
+                        <div class="py-3 text-center text-sm font-semibold text-gray-600 dark:text-gray-300">T5</div>
+                        <div class="py-3 text-center text-sm font-semibold text-gray-600 dark:text-gray-300">T6</div>
+                        <div class="py-3 text-center text-sm font-semibold text-blue-500">T7</div>
+                    </div>
+                    <!-- Calendar Days -->
+                    <div id="calendarGrid" class="grid grid-cols-7">
+                        <!-- Days will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Selected Date Info -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Thông tin ngày</h3>
+                    <div id="selectedDateInfo">
+                        <p class="text-gray-600 dark:text-gray-400">Chọn một ngày để xem chi tiết</p>
+                    </div>
+                </div>
+
+                <!-- Quick Notes -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ghi chú nhanh</h3>
+                    <div id="notesList" class="space-y-2 mb-4 max-h-48 overflow-y-auto">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 italic">Chưa có ghi chú</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <input type="text" id="noteInput" placeholder="Thêm ghi chú..." 
+                            class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                        <button id="addNoteBtn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Holidays -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Ngày lễ sắp tới</h3>
+                    <ul id="upcomingHolidays" class="space-y-2 text-sm">
+                        <!-- Holidays will be populated by JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="border-t dark:border-gray-700 mt-8 pt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+                <p>&copy; 2024 Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/lunar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/calendar.js"></script>
+</body>
+</html>

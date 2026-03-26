@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thời sự - Portal</title>
+    <meta name="description" content="Tin tức mới nhất: Trong nước, Quốc tế, Công nghệ, Kinh tế, Thể thao">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                        accent: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                        </svg>
+                        <span class="text-xl font-bold text-gray-800 dark:text-white">Portal</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Trang chủ</a>
+                    <a href="calendar.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Lịch</a>
+                    <a href="weather.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Thời tiết</a>
+                    <a href="news.html" class="nav-link active text-primary font-medium">Thời sự</a>
+                    <a href="contact.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Liên hệ</a>
+                    <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+            <div class="px-4 py-2 space-y-2">
+                <a href="index.html" class="block py-2 text-gray-600 dark:text-gray-300">Trang chủ</a>
+                <a href="calendar.html" class="block py-2 text-gray-600 dark:text-gray-300">Lịch</a>
+                <a href="weather.html" class="block py-2 text-gray-600 dark:text-gray-300">Thời tiết</a>
+                <a href="news.html" class="block py-2 text-primary font-medium">Thời sự</a>
+                <a href="contact.html" class="block py-2 text-gray-600 dark:text-gray-300">Liên hệ</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">Thời sự</h1>
+
+        <!-- Search and Filter -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1 relative">
+                    <input type="text" id="newsSearch" placeholder="Tìm kiếm tin tức..." 
+                        class="w-full px-4 py-3 pl-12 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                    <svg class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </div>
+                <div class="flex flex-wrap gap-2" id="categoryFilters">
+                    <button data-category="all" class="category-btn px-4 py-2 rounded-lg bg-primary text-white font-medium transition-colors">Tất cả</button>
+                    <button data-category="domestic" class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Trong nước</button>
+                    <button data-category="international" class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Quốc tế</button>
+                    <button data-category="technology" class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Công nghệ</button>
+                    <button data-category="economy" class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Kinh tế</button>
+                    <button data-category="sports" class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Thể thao</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured News -->
+        <section id="featuredNews" class="mb-8">
+            <div class="animate-pulse bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                <div class="h-64 bg-gray-200 dark:bg-gray-700"></div>
+                <div class="p-6">
+                    <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+                    <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                    <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Grid -->
+        <section>
+            <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- News items will be populated by JavaScript -->
+                <div class="animate-pulse bg-white dark:bg-gray-800 rounded-xl shadow-lg h-80"></div>
+                <div class="animate-pulse bg-white dark:bg-gray-800 rounded-xl shadow-lg h-80"></div>
+                <div class="animate-pulse bg-white dark:bg-gray-800 rounded-xl shadow-lg h-80"></div>
+            </div>
+        </section>
+
+        <!-- Load More -->
+        <div class="text-center mt-8">
+            <button id="loadMoreBtn" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">
+                Tải thêm tin tức
+            </button>
+        </div>
+
+        <!-- API Notice -->
+        <div class="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+            <p class="text-sm text-yellow-700 dark:text-yellow-300">
+                <span class="font-medium">Lưu ý:</span> Hiện đang hiển thị dữ liệu tin tức demo. 
+                Để sử dụng NewsAPI, vui lòng đăng ký tại <a href="https://newsapi.org" target="_blank" class="underline">newsapi.org</a> 
+                và cập nhật API key trong file <code class="bg-yellow-100 dark:bg-yellow-800 px-1 rounded">js/news.js</code>.
+            </p>
+        </div>
+    </main>
+
+    <!-- News Detail Modal -->
+    <div id="newsModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden overflow-y-auto">
+        <div class="min-h-screen px-4 text-center">
+            <div class="fixed inset-0 transition-opacity" onclick="closeNewsModal()"></div>
+            <span class="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span>
+            <div class="inline-block w-full max-w-4xl p-6 my-8 text-left align-middle bg-white dark:bg-gray-800 rounded-xl shadow-xl transform transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <span id="modalCategory" class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Category</span>
+                    <button onclick="closeNewsModal()" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <img id="modalImage" src="" alt="" class="w-full h-64 object-cover rounded-lg mb-4">
+                <h2 id="modalTitle" class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Title</h2>
+                <p id="modalDate" class="text-sm text-gray-500 dark:text-gray-400 mb-4">Date</p>
+                <div id="modalContent" class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    Content
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="border-t dark:border-gray-700 mt-8 pt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+                <p>&copy; 2024 Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/lunar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/news.js"></script>
+</body>
+</html>

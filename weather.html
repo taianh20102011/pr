@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thời tiết - Portal</title>
+    <meta name="description" content="Dự báo thời tiết 7 ngày, thông tin chi tiết về nhiệt độ, độ ẩm, gió">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                        accent: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                        </svg>
+                        <span class="text-xl font-bold text-gray-800 dark:text-white">Portal</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Trang chủ</a>
+                    <a href="calendar.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Lịch</a>
+                    <a href="weather.html" class="nav-link active text-primary font-medium">Thời tiết</a>
+                    <a href="news.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Thời sự</a>
+                    <a href="contact.html" class="nav-link text-gray-600 dark:text-gray-300 hover:text-primary">Liên hệ</a>
+                    <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg class="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+            <div class="px-4 py-2 space-y-2">
+                <a href="index.html" class="block py-2 text-gray-600 dark:text-gray-300">Trang chủ</a>
+                <a href="calendar.html" class="block py-2 text-gray-600 dark:text-gray-300">Lịch</a>
+                <a href="weather.html" class="block py-2 text-primary font-medium">Thời tiết</a>
+                <a href="news.html" class="block py-2 text-gray-600 dark:text-gray-300">Thời sự</a>
+                <a href="contact.html" class="block py-2 text-gray-600 dark:text-gray-300">Liên hệ</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">Thời tiết</h1>
+
+        <!-- Search Section -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1 relative">
+                    <input type="text" id="cityInput" placeholder="Nhập tên thành phố..." 
+                        class="w-full px-4 py-3 pl-12 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                    <svg class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </div>
+                <button id="searchBtn" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    Tìm kiếm
+                </button>
+                <button id="locationBtn" class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    Vị trí của tôi
+                </button>
+            </div>
+            
+            <!-- Favorite Cities -->
+            <div class="mt-4 flex flex-wrap gap-2" id="favoriteCities">
+                <span class="text-sm text-gray-600 dark:text-gray-400 mr-2">Thành phố yêu thích:</span>
+                <!-- Favorite cities will be populated here -->
+            </div>
+        </div>
+
+        <!-- Current Weather -->
+        <div id="currentWeather" class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-8 text-white mb-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                    <h2 id="cityName" class="text-3xl font-bold mb-2">Hà Nội, VN</h2>
+                    <p id="currentDate" class="text-blue-100">...</p>
+                    <div class="flex items-center justify-center md:justify-start mt-4">
+                        <span id="temperature" class="text-6xl font-bold">--°</span>
+                        <div class="ml-4 text-left">
+                            <p id="weatherDesc" class="text-xl">--</p>
+                            <p id="feelsLike" class="text-blue-100">Cảm giác như --°</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="weatherIcon" class="text-8xl">
+                    🌤️
+                </div>
+            </div>
+            
+            <!-- Weather Details -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-6 border-t border-blue-400">
+                <div class="text-center">
+                    <p class="text-blue-100 text-sm">Độ ẩm</p>
+                    <p id="humidity" class="text-2xl font-semibold">--%</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-blue-100 text-sm">Tốc độ gió</p>
+                    <p id="windSpeed" class="text-2xl font-semibold">-- km/h</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-blue-100 text-sm">Áp suất</p>
+                    <p id="pressure" class="text-2xl font-semibold">-- hPa</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-blue-100 text-sm">Tầm nhìn</p>
+                    <p id="visibility" class="text-2xl font-semibold">-- km</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7-Day Forecast -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Dự báo 7 ngày</h3>
+            <div id="forecastContainer" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                <!-- Forecast items will be populated by JavaScript -->
+                <div class="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-32"></div>
+                <div class="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-32"></div>
+                <div class="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-32"></div>
+                <div class="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-32"></div>
+                <div class="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-32"></div>
+                <div class="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-32"></div>
+                <div class="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg h-32"></div>
+            </div>
+        </div>
+
+        <!-- API Notice -->
+        <div class="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+            <p class="text-sm text-yellow-700 dark:text-yellow-300">
+                <span class="font-medium">Lưu ý:</span> Dữ liệu thời tiết được cung cấp bởi Open-Meteo API (miễn phí, không cần API key). 
+                Nếu bạn có API key OpenWeatherMap, có thể cập nhật trong file <code class="bg-yellow-100 dark:bg-yellow-800 px-1 rounded">js/weather.js</code>.
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="border-t dark:border-gray-700 mt-8 pt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+                <p>&copy; 2024 Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/lunar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/weather.js"></script>
+</body>
+</html>
