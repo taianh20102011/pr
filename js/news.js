@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!document.getElementById('newsGrid')) return;
     
     const NewsApp = {
-        apiKey: '', // NewsAPI key (optional - using demo data if empty)
+        apiKey: 'd664afe835da444db7286409f0a6754b', // NewsAPI key (optional - using demo data if empty)
         currentCategory: 'all',
         searchQuery: '',
         displayedCount: 6,
